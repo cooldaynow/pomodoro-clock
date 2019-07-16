@@ -1,0 +1,23 @@
+/* CONTAINER */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: lightgreen;
+
+  /* POMODORO */
+}
+.wrap__pomodoro {
+  min-height: 500px;
+  min-width: 500px;
+  background-color: lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+
