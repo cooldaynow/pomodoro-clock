@@ -19,26 +19,35 @@ class PomodoroClock extends Component {
   };
   sessionUp = () => {
     if (this.state.timer) {
-      this.setState(
-        state => ((state.session = ++state.mins), (state.secs = 0)),
-      );
+      let mins = this.state.mins;
+      if (mins < 60) {
+        mins++;
+      }
+      this.setState(state => ({
+        mins,
+        session: mins,
+        secs: 0,
+      }));
     }
   };
   sessionDown = () => {
     if (this.state.timer) {
-      this.setState(
-        state => (
-          state.mins === 1
-            ? (state.session = state.mins)
-            : (state.session = --state.mins),
-          (state.secs = 0)
-        ),
-      );
+      let mins = this.state.mins;
+      if (mins > 1) {
+        mins--;
+      }
+      this.setState(state => ({
+        session: state.mins === 1 ? state.mins : mins,
+        mins,
+        secs: 0,
+      }));
     }
   };
   breakUp = () => {
     if (this.state.timer) {
-      this.setState(state => state.breaks++);
+      if (this.state.breaks < 15) {
+        this.setState(state => state.breaks++);
+      }
     }
   };
   breakDown = () => {
@@ -49,16 +58,17 @@ class PomodoroClock extends Component {
     }
   };
   enableTimer = () => {
-    let {mins, secs, breaks, session, screen} = this.state;
+    let {mins, secs, breaks, session, screen, change} = this.state;
     if (this.state.timer) {
       this.timerId = setInterval(() => {
-        //конец времени
+        //конец сессии/перерыва
         if (mins === 0 && secs === 0) {
-          this.setState({change: !this.state.change});
-          mins = this.state.change ? breaks : session;
-          screen = this.state.change ? 'Break' : 'Session';
+          change = !this.state.change;
+          mins = change ? breaks : session;
+          screen = change ? 'Break' : 'Session';
           this.playAlarm();
         } else {
+          //прошла минута
           if (secs === 0) {
             mins--;
             secs = 59;
@@ -66,8 +76,8 @@ class PomodoroClock extends Component {
             secs--;
           }
         }
-        this.setState({mins, secs, screen});
-      }, 100);
+        this.setState({mins, secs, screen, change});
+      }, 1000);
       this.setState({timer: false});
     }
   };

@@ -3,7 +3,19 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  font-size: 14px;
+  font-family: 'Share Tech Mono', monospace;
   p {
     margin: 5px;
+    color: #a50d0d;
   }
+  span {
+    color: #00264d;
+  }
+}
+.author {
+  text-decoration: line-through;
+}
+.focused {
+  text-decoration: none;
 }

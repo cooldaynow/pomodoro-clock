@@ -2,23 +2,9 @@
  .settings {
   width: 100%;
   min-height: 20%;
-  background-color: tomato;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
-.arrows {
-  display: flex;
-  justify-content: space-around;
-}
-.up {
-  width: 20px;
-  height: 20px;
-  background-color: black;
-}
 
-.down {
-  width: 20px;
-  height: 20px;
-  background-color: black;
-}

@@ -3,7 +3,7 @@ import './index.scss';
 
 const Header = () => (
   <div className="header__pomodoro">
-    <h1> Pomodoro Clock </h1>
+    <h1 >Pomodoro Clock</h1>
   </div>
 );
 

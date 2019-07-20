@@ -1,12 +1,11 @@
 import React from 'react';
 import './index.scss';
-import Session from './Session';
-import Break from './Break';
+import Time from './Time';
 
 const Settings = ({breakUp,breakDown,breaks,sessionUp,sessionDown,session}) => (
   <div className="settings">
-    <Break breakUp={breakUp} breakDown ={breakDown} breaks={breaks}   />
-    <Session sessionUp={sessionUp} sessionDown={sessionDown} session={session}/>
+    <Time up={breakUp} down={breakDown} value={breaks} name = 'Break' />
+    <Time up={sessionUp} down={sessionDown} value={session} name = 'Session'/>
   </div>
 );
 
