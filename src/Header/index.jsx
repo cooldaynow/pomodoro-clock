@@ -3,7 +3,13 @@ import './index.scss';
 
 const Header = () => (
   <div className="header__pomodoro">
-    <h1 >Pomodoro Clock</h1>
+    <h1>
+      <a
+        href="https://github.com/cooldaynow/pomodoro-clock"
+        title="Link to GitHub">
+        Pomodoro Clock
+      </a>
+    </h1>
   </div>
 );
 
