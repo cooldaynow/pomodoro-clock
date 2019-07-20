@@ -1,0 +1,29 @@
+[33mcommit ab661b72bc924f534d07380997bc7942d90ae636[m[33m ([m[1;36mHEAD -> [m[1;32mrefactor[m[33m)[m
+Author: aacheblukov <aacheblukov@gmail.com>
+Date:   Sat Jul 20 20:59:28 2019 +0300
+
+    refactor
+
+[33mcommit 93f7299f9041e092c2a9522c4277c421d6f52729[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: cooldaynow <cooldaynow@gmail.com>
+Date:   Sat Jul 20 18:56:16 2019 +0300
+
+    change Head
+
+[33mcommit 74a0648947cad8c739b4ea5bed06f6029210ccf6[m
+Author: cooldaynow <cooldaynow@gmail.com>
+Date:   Sat Jul 20 18:49:21 2019 +0300
+
+    refract logic
+
+[33mcommit 8f787f4017b207ed090bb662f1fea6d4b31016e9[m
+Author: cooldaynow <cooldaynow@gmail.com>
+Date:   Tue Jul 16 23:17:26 2019 +0300
+
+    raw
+
+[33mcommit 225737025c7d30809a0a83f2c27a43b8cb70a87a[m
+Author: cooldaynow <cooldaynow@gmail.com>
+Date:   Mon Jul 15 19:13:46 2019 +0300
+
+    Initial commit from Create React App
