@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import './index.scss';
-import audio from '../audio/alarm.mp3';
-import Header from '../Header';
-import Settings from '../Settings';
-import Screen from '../Screen';
-import Control from '../Control';
-import Author from '../Author';
+import React, { Component } from "react";
+import "./index.scss";
+import audio from "../audio/alarm.mp3";
+import Header from "../Header";
+import Settings from "../Settings";
+import Screen from "../Screen";
+import Control from "../Control";
+import Author from "../Author";
 
 class PomodoroClock extends Component {
   state = {
@@ -15,79 +15,74 @@ class PomodoroClock extends Component {
     breaks: 5,
     timer: true,
     change: false,
-    screen: 'Session',
+    screen: "Session"
   };
   sessionUp = () => {
-    if (this.state.timer) {
-      let mins = this.state.mins;
-      if (mins < 60) {
-        mins++;
-      }
-      this.setState(state => ({
-        mins,
-        session: mins,
-        secs: 0,
-      }));
+    let mins = this.state.mins;
+    if (mins < 60) {
+      mins++;
     }
+    this.setState(state => ({
+      mins,
+      session: mins,
+      secs: 0
+    }));
   };
   sessionDown = () => {
-    if (this.state.timer) {
-      let mins = this.state.mins;
-      if (mins > 1) {
-        mins--;
-      }
-      this.setState(state => ({
-        session: state.mins === 1 ? state.mins : mins,
-        mins,
-        secs: 0,
-      }));
+    let mins = this.state.mins;
+    if (mins > 1) {
+      mins--;
     }
+    this.setState(state => ({
+      session: state.mins === 1 ? state.mins : mins,
+      mins,
+      secs: 0
+    }));
   };
   breakUp = () => {
-    if (this.state.timer) {
-      if (this.state.breaks < 15) {
-        this.setState(state => state.breaks++);
-      }
+    if (this.state.breaks < 15) {
+      this.setState(state => state.breaks++);
     }
   };
   breakDown = () => {
-    if (this.state.timer) {
-      this.setState(state =>
-        state.breaks === 1 ? state.breaks : state.breaks--,
-      );
-    }
+    this.setState(state =>
+      state.breaks === 1 ? state.breaks : state.breaks--
+    );
+  };
+  switchStatus = () => {
+    let { mins, breaks, session, screen, change } = this.state;
+    change = !this.state.change;
+    mins = change ? breaks : session;
+    screen = change ? "Break" : "Session";
+    this.playAlarm();
+    this.setState({ mins, screen, change });
   };
   enableTimer = () => {
-    let {mins, secs, breaks, session, screen, change} = this.state;
-    if (this.state.timer) {
-      this.timerId = setInterval(() => {
-        //конец сессии/перерыва
-        if (mins === 0 && secs === 0) {
-          change = !this.state.change;
-          mins = change ? breaks : session;
-          screen = change ? 'Break' : 'Session';
-          this.playAlarm();
+    let { mins, secs } = this.state;
+    this.timerId = setInterval(() => {
+      //конец сессии/перерыва
+      if (mins === 0 && secs === 0) {
+        this.switchStatus();
+      } else {
+        //прошла минута
+        if (secs === 0) {
+          mins--;
+          secs = 59;
         } else {
-          //прошла минута
-          if (secs === 0) {
-            mins--;
-            secs = 59;
-          } else {
-            secs--;
-          }
+          secs--;
         }
-        this.setState({mins, secs, screen, change});
-      }, 1000);
-      this.setState({timer: false});
-    }
+      }
+      this.setState({ mins, secs });
+    }, 1000);
+    this.setState({ timer: false });
   };
   pause = () => {
     clearInterval(this.timerId);
-    this.setState({timer: true});
+    this.setState({ timer: true });
   };
   reset = () => {
     clearInterval(this.timerId);
-    this.setState({timer: true, session: 25, breaks: 5, mins: 25, secs: 0});
+    this.setState({ timer: true, session: 25, breaks: 5, mins: 25, secs: 0 });
   };
 
   playAlarm = () => {
@@ -110,6 +105,7 @@ class PomodoroClock extends Component {
             breakUp={this.breakUp}
             breakDown={this.breakDown}
             breaks={this.state.breaks}
+            timer={this.state.timer}
           />
           <Screen
             screen={this.state.screen}
@@ -120,6 +116,7 @@ class PomodoroClock extends Component {
             enableTimer={this.enableTimer}
             pause={this.pause}
             reset={this.reset}
+            timer={this.state.timer}
           />
           <Author />
         </div>
