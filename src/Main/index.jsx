@@ -18,55 +18,53 @@ class PomodoroClock extends Component {
     screen: 'Session',
   };
   sessionUp = () => {
-    if (this.state.timer) {
-      let mins = this.state.mins;
-      if (mins < 60) {
-        mins++;
-      }
-      this.setState(state => ({
-        mins,
-        session: mins,
-        secs: 0,
-      }));
+    let mins = this.state.mins;
+    if (mins < 60) {
+      mins++;
     }
+    this.setState(state => ({
+      mins,
+      session: mins,
+      secs: 0,
+    }));
   };
   sessionDown = () => {
-    if (this.state.timer) {
-      let mins = this.state.mins;
-      if (mins > 1) {
-        mins--;
-      }
-      this.setState(state => ({
-        session: state.mins === 1 ? state.mins : mins,
-        mins,
-        secs: 0,
-      }));
+    let mins = this.state.mins;
+    if (mins > 1) {
+      mins--;
     }
+    this.setState(state => ({
+      session: state.mins === 1 ? state.mins : mins,
+      mins,
+      secs: 0,
+    }));
   };
   breakUp = () => {
-    if (this.state.timer) {
-      if (this.state.breaks < 15) {
-        this.setState(state => state.breaks++);
-      }
+    if (this.state.breaks < 15) {
+      this.setState(state => state.breaks++);
     }
   };
   breakDown = () => {
-    if (this.state.timer) {
-      this.setState(state =>
-        state.breaks === 1 ? state.breaks : state.breaks--,
-      );
-    }
+    this.setState(state =>
+      state.breaks === 1 ? state.breaks : state.breaks--,
+    );
+  };
+  switchSession = () => {
+    let {mins, breaks, session, screen, change, secs} = this.state;
+    change = !this.state.change;
+    mins = change ? breaks : session;
+    screen = change ? 'Break' : 'Session';
+    this.playAlarm();
+    this.setState({screen, change});
+    return mins;
   };
   enableTimer = () => {
-    let {mins, secs, breaks, session, screen, change} = this.state;
+    let {mins, secs} = this.state;
     if (this.state.timer) {
       this.timerId = setInterval(() => {
         //конец сессии/перерыва
-        if (mins === 0 && secs === 0) {
-          change = !this.state.change;
-          mins = change ? breaks : session;
-          screen = change ? 'Break' : 'Session';
-          this.playAlarm();
+        if (this.state.mins === 0 && secs === 0) {
+          mins = this.switchSession();
         } else {
           //прошла минута
           if (secs === 0) {
@@ -76,7 +74,8 @@ class PomodoroClock extends Component {
             secs--;
           }
         }
-        this.setState({mins, secs, screen, change});
+
+        this.setState({mins, secs});
       }, 1000);
       this.setState({timer: false});
     }
@@ -110,6 +109,7 @@ class PomodoroClock extends Component {
             breakUp={this.breakUp}
             breakDown={this.breakDown}
             breaks={this.state.breaks}
+            timer={this.state.timer}
           />
           <Screen
             screen={this.state.screen}
